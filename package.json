@@ -47,10 +47,12 @@
         ]
       },
       "electronPackagerConfig": {
-        "packageManager": "npm"
+        "packageManager": "npm",
+        "icon": "./cuteyejun"
       },
       "electronWinstallerConfig": {
-        "name": "dudu_todo"
+        "name": "dudu_todo",
+        "setupIcon": "./cuteyejun.ico"
       },
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},

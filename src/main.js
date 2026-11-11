@@ -9,6 +9,7 @@ function createWindow() {
     transparent: true,
     resizable: false,
     skipTaskbar: true,
+    icon: path.join(__dirname, '../cuteyejun.ico'),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
