@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: rgba(15, 15, 15, 0.85);
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      border-radius: 12px;
+      height: 100vh;
+      box-sizing: border-box;
+      -webkit-app-region: drag;
+    }
+    h3 { margin-top: 0; font-weight: 600; letter-spacing: 0.5px; }
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #333;
+      background: #222;
+      color: white;
+      box-sizing: border-box;
+      -webkit-app-region: no-drag;
+      outline: none;
+    }
+    input:focus { border-color: #555; }
+    ul { list-style-type: none; padding: 0; -webkit-app-region: no-drag; }
+    li {
+      margin: 8px 0;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+    li:hover { background: rgba(255, 255, 255, 0.1); }
+  </style>
+</head>
+<body>
+  <h3>Tasks</h3>
+  <input type="text" id="taskInput" placeholder="Add a task & press Enter...">
+  <ul id="taskList"></ul>
+
+  <script>
+    const input = document.getElementById('taskInput');
+    const list = document.getElementById('taskList');
+
+    function loadTasks() {
+      const savedTasks = JSON.parse(localStorage.getItem('dudu_tasks') || '[]');
+      list.innerHTML = '';
+      savedTasks.forEach((taskText, index) => {
+        const li = document.createElement('li');
+        li.textContent = taskText;
+        li.onclick = () => removeTask(index);
+        list.appendChild(li);
+      });
+    }
+
+    function saveTasks(tasks) {
+      localStorage.setItem('dudu_tasks', JSON.stringify(tasks));
+      loadTasks();
+    }
+
+    function removeTask(index) {
+      const savedTasks = JSON.parse(localStorage.getItem('dudu_tasks') || '[]');
+      savedTasks.splice(index, 1);
+      saveTasks(savedTasks);
+    }
+
+    input.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter' && input.value.trim() !== '') {
+        const savedTasks = JSON.parse(localStorage.getItem('dudu_tasks') || '[]');
+        savedTasks.push(input.value.trim());
+        saveTasks(savedTasks);
+        input.value = '';
+      }
+    });
+
+    loadTasks();
+  </script>
+</body>
+</html>
